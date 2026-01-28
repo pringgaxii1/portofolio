@@ -1,0 +1,1407 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello Indie! - Indonesian Indie Music Blog</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
+        
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f8f6f0;
+            --bg-secondary: #ffffff;
+            --text-primary: #2c2c2c;
+            --accent-primary: #1a1a1a;
+            --accent-secondary: #8b7355;
+            --vintage-red: #a0522d;
+            --vintage-green: #556b2f;
+            --vintage-blue: #4682b4;
+            --pixel-font: 'Press Start 2P', monospace;
+            --retro-font: 'VT323', monospace;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #f5f5f5;
+            --accent-primary: #ffffff;
+            --accent-secondary: #cccccc;
+            --vintage-red: #cd853f;
+            --vintage-green: #9acd32;
+            --vintage-blue: #87ceeb;
+        }
+
+        body {
+            font-family: var(--retro-font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                /* Vertical lines */
+                linear-gradient(90deg, transparent 0px, transparent 19px, var(--accent-secondary) 19px, var(--accent-secondary) 21px, transparent 21px, transparent 39px, var(--vintage-red) 39px, var(--vintage-red) 41px, transparent 41px, transparent 59px, var(--accent-secondary) 59px, var(--accent-secondary) 61px, transparent 61px, transparent 79px, var(--vintage-green) 79px, var(--vintage-green) 81px, transparent 81px, transparent 99px, var(--accent-secondary) 99px, var(--accent-secondary) 101px),
+                /* Horizontal lines */
+                linear-gradient(0deg, transparent 0px, transparent 19px, var(--accent-secondary) 19px, var(--accent-secondary) 21px, transparent 21px, transparent 39px, var(--vintage-blue) 39px, var(--vintage-blue) 41px, transparent 41px, transparent 59px, var(--accent-secondary) 59px, var(--accent-secondary) 61px, transparent 61px, transparent 79px, var(--vintage-red) 79px, var(--vintage-red) 81px, transparent 81px, transparent 99px, var(--accent-secondary) 99px, var(--accent-secondary) 101px),
+                /* Base plaid pattern */
+                repeating-linear-gradient(45deg, var(--bg-primary) 0px, var(--bg-primary) 10px, rgba(139, 115, 85, 0.1) 10px, rgba(139, 115, 85, 0.1) 20px);
+            background-size: 100px 100px, 100px 100px, 40px 40px;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 3px solid var(--accent-primary);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: var(--pixel-font);
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            animation: pixelGlow 2s infinite alternate;
+        }
+
+        @keyframes pixelGlow {
+            0% { text-shadow: 0 0 5px var(--accent-secondary); }
+            100% { text-shadow: 0 0 15px var(--accent-secondary), 0 0 25px var(--accent-secondary); }
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            padding: 0.5rem;
+            border: 2px solid var(--accent-secondary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--retro-font);
+            border-radius: 0;
+        }
+
+        .theme-toggle, .lang-toggle {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-family: var(--pixel-font);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover, .lang-toggle:hover {
+            background: var(--accent-secondary);
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 70vh;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary), rgba(160, 82, 45, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--accent-secondary) 1px, transparent 1px),
+                radial-gradient(circle at 75% 75%, var(--accent-secondary) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-family: var(--pixel-font);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: typewriter 3s steps(30) 1s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 2s both;
+        }
+
+        @keyframes typewriter {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .cta-button {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 1rem 2rem;
+            border: none;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .content {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border: 2px solid var(--accent-secondary);
+        }
+
+        .sidebar {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border: 2px solid var(--accent-secondary);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        /* Music Player */
+        .music-player {
+            background: linear-gradient(135deg, var(--vintage-red), var(--accent-primary));
+            color: var(--bg-primary);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 3px solid var(--accent-secondary);
+            box-shadow: 0 5px 15px rgba(160, 82, 45, 0.3);
+        }
+
+        .player-title {
+            font-family: var(--pixel-font);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .player-btn {
+            background: var(--bg-primary);
+            color: var(--accent-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            font-family: var(--pixel-font);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .player-btn:hover {
+            background: var(--accent-secondary);
+            color: var(--bg-primary);
+        }
+
+        .now-playing {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Album Grid */
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .album-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-secondary);
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--vintage-red);
+            box-shadow: 0 10px 20px rgba(160, 82, 45, 0.2);
+        }
+
+        .album-cover {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(45deg, var(--vintage-green), var(--accent-secondary));
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--pixel-font);
+            font-size: 0.7rem;
+            color: var(--bg-primary);
+            border: 2px solid var(--vintage-red);
+        }
+
+        .album-card:nth-child(2) .album-cover {
+            background: linear-gradient(45deg, var(--vintage-blue), var(--accent-secondary));
+        }
+
+        .album-card:nth-child(3) .album-cover {
+            background: linear-gradient(45deg, var(--vintage-red), var(--accent-secondary));
+        }
+
+        .album-card:nth-child(4) .album-cover {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .album-title {
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .album-artist {
+            font-size: 1rem;
+            color: var(--accent-secondary);
+        }
+
+        .track-list {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--accent-secondary);
+            animation: slideDown 0.3s ease;
+        }
+
+        .track-list.show {
+            display: block;
+        }
+
+        .track-list li:hover {
+            background: var(--accent-secondary);
+            color: var(--bg-primary);
+            padding-left: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-family: var(--pixel-font);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--accent-primary);
+        }
+
+        .band-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .band-card {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-secondary);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .band-card:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.02);
+        }
+
+        .band-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--vintage-red), var(--accent-primary));
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            color: var(--bg-primary);
+            border: 3px solid var(--accent-secondary);
+            box-shadow: 0 3px 10px rgba(160, 82, 45, 0.3);
+        }
+
+        .band-card:nth-child(2) .band-avatar {
+            background: linear-gradient(135deg, var(--vintage-green), var(--accent-primary));
+        }
+
+        .band-card:nth-child(3) .band-avatar {
+            background: linear-gradient(135deg, var(--vintage-blue), var(--accent-primary));
+        }
+
+        .band-card:nth-child(4) .band-avatar {
+            background: linear-gradient(135deg, var(--vintage-red), var(--vintage-green));
+        }
+
+        .band-card:nth-child(5) .band-avatar {
+            background: linear-gradient(135deg, var(--vintage-blue), var(--vintage-red));
+        }
+
+        .band-card:nth-child(6) .band-avatar {
+            background: linear-gradient(135deg, var(--accent-secondary), var(--vintage-green));
+        }
+
+        .band-name {
+            font-family: var(--pixel-font);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .band-genre {
+            color: var(--accent-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Statistics Counter */
+        .stats-section {
+            background: linear-gradient(135deg, var(--vintage-blue), var(--accent-primary), var(--vintage-green));
+            color: var(--bg-primary);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 3px solid var(--vintage-red);
+            box-shadow: 0 8px 25px rgba(70, 130, 180, 0.3);
+            position: relative;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            pointer-events: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--pixel-font);
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border: 2px solid var(--accent-secondary);
+            margin: 2rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--accent-secondary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--retro-font);
+            font-size: 1rem;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .form-submit {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 1rem 2rem;
+            border: none;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Twibbon Section */
+        .twibbon-section {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border: 2px solid var(--accent-secondary);
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .twibbon-frame {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, var(--vintage-red), var(--vintage-green), var(--vintage-blue), var(--accent-primary));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--pixel-font);
+            font-size: 0.7rem;
+            color: var(--bg-primary);
+            position: relative;
+            border: 4px solid var(--accent-secondary);
+            box-shadow: 0 5px 20px rgba(160, 82, 45, 0.4);
+        }
+
+        .twibbon-frame::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 3px dashed var(--bg-primary);
+        }
+
+        .twibbon-frame::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Chatbot */
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot:hover {
+            transform: scale(1.1);
+            background: var(--accent-secondary);
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-primary);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            padding: 1rem;
+            font-family: var(--pixel-font);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid var(--accent-secondary);
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--accent-secondary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--retro-font);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, var(--accent-primary), var(--vintage-red), var(--accent-secondary));
+            color: var(--bg-primary);
+            padding: 3rem 2rem 1rem;
+            margin-top: 3rem;
+            border-top: 5px solid var(--vintage-green);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 50px,
+                rgba(255, 255, 255, 0.05) 50px,
+                rgba(255, 255, 255, 0.05) 100px
+            );
+            pointer-events: none;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: var(--pixel-font);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: var(--bg-primary);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            background: var(--bg-primary);
+            color: var(--accent-primary);
+            padding: 0.5rem;
+            text-decoration: none;
+            font-family: var(--pixel-font);
+            font-size: 0.7rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent-secondary);
+            color: var(--bg-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--bg-primary);
+            font-family: var(--pixel-font);
+            font-size: 0.7rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .album-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Header -->
+  <header class="header">
+   <nav class="nav-container"><a href="#" class="logo" id="site-title">Hello Indie!</a>
+    <ul class="nav-menu">
+     <li><a href="#home" class="nav-link">Home</a></li>
+     <li><a href="#music" class="nav-link">Music</a></li>
+     <li><a href="#galindie" class="nav-link">Galindie!</a></li>
+     <li><a href="#community" class="nav-link">Community</a></li>
+     <li><a href="#events" class="nav-link">Events</a></li>
+     <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <div class="nav-controls"><input type="search" class="search-bar" placeholder="Search bands..." id="search-input"> <button class="theme-toggle" id="theme-toggle">🌙</button> <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+   </nav>
+  </header><!-- Hero Section -->
+  <section class="hero" id="home">
+   <div class="hero-content">
+    <h1 class="hero-title" id="hero-title">Discover Indonesian Indie Music</h1>
+    <p class="hero-subtitle" id="hero-subtitle">From Harum Manis to Reality Club</p><a href="#music" class="cta-button">Explore Music</a>
+   </div>
+  </section><!-- Main Container -->
+  <div class="main-container"><!-- Main Content -->
+   <main class="content"><!-- Music Player Section -->
+    <section class="music-player">
+     <h2 class="player-title">🎵 Play Music in the Yard</h2>
+     <div class="player-controls"><button class="player-btn" id="play-btn">▶ PLAY</button> <button class="player-btn" id="pause-btn">⏸ PAUSE</button> <button class="player-btn" id="next-btn">⏭ NEXT</button>
+     </div>
+     <div class="now-playing" id="now-playing">
+      Now Playing: Harum Manis - "Lagu Indie"
+     </div>
+    </section><!-- Album Section -->
+    <section id="music" class="fade-in">
+     <h2 class="section-title">Featured Albums</h2>
+     <div class="album-grid">
+      <div class="album-card" onclick="toggleTrackList('harum-manis-tracks')">
+       <div class="album-cover">
+        <img src="images.jpeg" alt="Sampul Album Hentikan Pernikahan Ini" style="width: 100%; height: 100%; object-fit: cover;">
+
+       </div>
+       <h3 class="album-title">Hentikan Pernikahan Ini</h3>
+       <p class="album-artist">Harum Manis</p>
+       <div class="track-list" id="harum-manis-tracks">
+        <h4 style="font-family: var(--pixel-font); font-size: 0.7rem; margin: 1rem 0 0.5rem 0; color: var(--accent-primary);">Track List:</h4>
+        <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Harum Manis', 'Hentikan Pernikahan Ini')">🎵 Hentikan Pernikahan Ini</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Harum Manis', 'Mimpi Yang Sempurna')">🎵 Mimpi Yang Sempurna</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Harum Manis', 'Senja Di Jakarta')">🎵 Senja Di Jakarta</li>
+         <li style="padding: 0.3rem 0; cursor: pointer;" onclick="playTrack('Harum Manis', 'Kembali Pulang')">🎵 Kembali Pulang</li>
+        </ul>
+       </div>
+      </div>
+      <div class="album-card" onclick="toggleTrackList('jirapah-tracks')">
+       <div class="album-cover">
+        <img src="download (2).jpeg " alt="Sampul Album Planetarium" style="width: 100%; height: 100%; object-fit: cover;">
+        
+       </div>
+       <h3 class="album-title">Planetarium</h3>
+       <p class="album-artist">Jirapah</p>
+       <div class="track-list" id="jirapah-tracks">
+        <h4 style="font-family: var(--pixel-font); font-size: 0.7rem; margin: 1rem 0 0.5rem 0; color: var(--accent-primary);">Track List:</h4>
+        <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Jirapah', 'Planetarium')">🎵 Planetarium</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Jirapah', 'Bintang Kejora')">🎵 Bintang Kejora</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Jirapah', 'Galaksi Terjauh')">🎵 Galaksi Terjauh</li>
+         <li style="padding: 0.3rem 0; cursor: pointer;" onclick="playTrack('Jirapah', 'Orbit Cinta')">🎵 Orbit Cinta</li>
+        </ul>
+       </div>
+      </div>
+      <div class="album-card" onclick="toggleTrackList('reality-club-tracks')">
+       <div class="album-cover">
+        <img src="a596367d6ab6e3055c69c9dc4980bad7.440x440x1.jpg" alt="Sampul Album Anything You Want" style="width: 100%; height: 100%; object-fit: cover;">
+       </div>
+       <h3 class="album-title">Anything You Want</h3>
+       <p class="album-artist">Reality Club</p>
+       <div class="track-list" id="reality-club-tracks">
+        <h4 style="font-family: var(--pixel-font); font-size: 0.7rem; margin: 1rem 0 0.5rem 0; color: var(--accent-primary);">Track List:</h4>
+        <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Reality Club', 'Anything You Want')">🎵 Anything You Want</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Reality Club', 'Never Get Better')">🎵 Never Get Better</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Reality Club', 'Is It The Answer')">🎵 Is It The Answer</li>
+         <li style="padding: 0.3rem 0; cursor: pointer;" onclick="playTrack('Reality Club', 'Alexandra')">🎵 Alexandra</li>
+        </ul>
+       </div>
+      </div>
+      <div class="album-card" onclick="toggleTrackList('erk-tracks')">
+       <div class="album-cover">
+        <img src="download (1).jpeg " alt="Sampul Album Midnight Vibes" style="width: 100%; height: 100%; object-fit: cover;">
+
+       </div>
+       <h3 class="album-title">Midnight Vibes</h3>
+       <p class="album-artist">Efek Rumah Kaca</p>
+       <div class="track-list" id="erk-tracks">
+        <h4 style="font-family: var(--pixel-font); font-size: 0.7rem; margin: 1rem 0 0.5rem 0; color: var(--accent-primary);">Track List:</h4>
+        <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Efek Rumah Kaca', 'Desember')">🎵 Desember</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Efek Rumah Kaca', 'Cinta Melulu')">🎵 Cinta Melulu</li>
+         <li style="padding: 0.3rem 0; border-bottom: 1px solid var(--accent-secondary); cursor: pointer;" onclick="playTrack('Efek Rumah Kaca', 'Sebelah Mata')">🎵 Sebelah Mata</li>
+         <li style="padding: 0.3rem 0; cursor: pointer;" onclick="playTrack('Efek Rumah Kaca', 'Putih')">🎵 Putih</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </section><!-- Galindie Section -->
+    <section id="galindie" class="gallery-section fade-in">
+     <h2 class="section-title">Galindie! - Indonesian Indie Gallery</h2>
+     <div class="band-gallery">
+      <div class="band-card">
+       <div class="band-avatar">
+        <img src="ab6761610000e5ebf15c76f816672ebcd70fda44.jpeg" alt="Sampul harum-manis" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;overflow: hidden;">
+       </div>
+       <h3 class="band-name" id="featured-band">Harum Manis</h3>
+       <p class="band-genre">Indie Pop</p>
+      </div>
+      <div class="band-card">
+       <div class="band-avatar">
+        <img src="download (3).jpeg " alt="Sampul Jirapah" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;overflow: hidden;">
+       </div>
+       <h3 class="band-name">Jirapah</h3>
+       <p class="band-genre">Indie Rock</p>
+      </div>
+      <div class="band-card">
+       <div class="band-avatar">
+        <img src="download.jpeg" alt="Sampul reality-club" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;overflow: hidden;">
+       </div>
+       <h3 class="band-name">Reality Club</h3>
+       <p class="band-genre">Alternative</p>
+      </div>
+      <div class="band-card">
+       <div class="band-avatar">
+        <img src="download (5).jpeg " alt="Sampul Efek Rumah Kaca" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;overflow: hidden;">
+       </div>
+       <h3 class="band-name">Efek Rumah Kaca</h3>
+       <p class="band-genre">Indie Rock</p>
+      </div>
+      <div class="band-card">
+       <div class="band-avatar">
+        <img src="download (6).jpeg " alt="Sampul White Shoes" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;overflow: hidden;">
+       </div>
+       <h3 class="band-name">White Shoes</h3>
+       <p class="band-genre">Indie Pop</p>
+      </div>
+      <div class="band-card">
+       <div class="band-avatar">
+        <img src="download (4).jpeg " alt="Sampul Fourtwnty" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;overflow: hidden;">
+       </div>
+       <h3 class="band-name">Fourtwnty</h3>
+       <p class="band-genre">Alternative</p>
+      </div>
+     </div>
+    </section><!-- Statistics Section -->
+    <section class="stats-section fade-in">
+     <h2 class="section-title" style="color: var(--bg-primary); margin-bottom: 2rem;">Indie Stats</h2>
+     <div class="stats-grid">
+      <div class="stat-item"><span class="stat-number" id="bands-counter">150</span> <span class="stat-label">Indie Bands</span>
+      </div>
+      <div class="stat-item"><span class="stat-number" id="songs-counter">2500</span> <span class="stat-label">Songs</span>
+      </div>
+      <div class="stat-item"><span class="stat-number" id="listeners-counter">50K</span> <span class="stat-label">Listeners</span>
+      </div>
+      <div class="stat-item"><span class="stat-number" id="events-counter">75</span> <span class="stat-label">Events</span>
+      </div>
+     </div>
+    </section><!-- Community Section -->
+    <section id="community" class="fade-in">
+     <h2 class="section-title" id="community-title">Indie Community Indonesia</h2>
+     <div class="content">
+      <p>Join our vibrant community of Indonesian indie music lovers! Connect with fellow fans, discover new artists, and stay updated with the latest indie scene news.</p><br>
+      <h3>Featured Communities:</h3>
+      <ul style="margin: 1rem 0; padding-left: 2rem;">
+       <li>Jakarta Indie Scene</li>
+       <li>Bandung Underground</li>
+       <li>Yogya Music Collective</li>
+       <li>Surabaya Indie Network</li>
+      </ul>
+     </div>
+    </section><!-- Twibbon Section -->
+    <section class="twibbon-section fade-in">
+     <h2 class="section-title">Indie Twibbon</h2>
+     <div class="twibbon-frame">
+      INDIE<br>
+      FRAME
+     </div>
+     <p>Show your support for Indonesian indie music with our vintage-modern twibbon!</p><button class="cta-button" style="margin-top: 1rem;">Download Twibbon</button>
+    </section><!-- Contact Form -->
+    <section id="contact" class="contact-form fade-in">
+     <h2 class="section-title">Get in Touch</h2>
+     <form id="contact-form">
+      <div class="form-group"><label for="name" class="form-label">Name:</label> <input type="text" id="name" name="name" class="form-input" required>
+      </div>
+      <div class="form-group"><label for="email" class="form-label">Email:</label> <input type="email" id="email" name="email" class="form-input" required>
+      </div>
+      <div class="form-group"><label for="message" class="form-label">Message:</label> <textarea id="message" name="message" class="form-textarea" rows="5" required></textarea>
+      </div><button type="submit" class="form-submit">Send Message</button>
+     </form>
+    </section>
+   </main><!-- Sidebar -->
+   <aside class="sidebar">
+    <h3 style="font-family: var(--pixel-font); font-size: 1rem; margin-bottom: 1rem;">Latest News</h3>
+    <div style="margin-bottom: 2rem;">
+     <h4>New Album Release</h4>
+     <p>Reality Club drops their latest album "Never Get Better" featuring 10 amazing tracks.</p><small style="color: var(--accent-secondary);">2 days ago</small>
+    </div>
+    <div style="margin-bottom: 2rem;">
+     <h4>Indie Festival 2024</h4>
+     <p>Jakarta Indie Festival announces lineup featuring top Indonesian indie bands.</p><small style="color: var(--accent-secondary);">1 week ago</small>
+    </div>
+    <div>
+     <h4>Band Spotlight</h4>
+     <p>Discover emerging indie band "Sunset Rollercoaster" from Taiwan performing in Indonesia.</p><small style="color: var(--accent-secondary);">2 weeks ago</small>
+    </div>
+   </aside>
+  </div><!-- Chatbot -->
+  <div class="chatbot" id="chatbot-toggle">
+   💬
+  </div>
+  <div class="chat-window" id="chat-window">
+   <div class="chat-header">
+    Indie Guide Bot
+   </div>
+   <div class="chat-messages" id="chat-messages">
+    <p>Hello! I'm your indie music guide. Ask me about bands, events, or anything indie!</p>
+   </div>
+   <div class="chat-input-area"><input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+   </div>
+  </div><!-- Footer -->
+  <footer class="footer">
+   <div class="footer-content">
+    <div class="footer-section">
+     <h3>Hello Indie!</h3>
+     <p>Your ultimate destination for Indonesian indie music discovery.</p>
+     <div class="social-links"><a href="#" class="social-link">FB</a> <a href="#" class="social-link">IG</a> <a href="#" class="social-link">TW</a> <a href="#" class="social-link">YT</a>
+     </div>
+    </div>
+    <div class="footer-section">
+     <h3>Quick Links</h3><a href="#music">Music</a> <a href="#galindie">Galindie!</a> <a href="#community">Community</a> <a href="#events">Events</a>
+    </div>
+    <div class="footer-section">
+     <h3>Featured Bands</h3><a href="#">Harum Manis</a> <a href="#">Jirapah</a> <a href="#">Reality Club</a> <a href="#">Efek Rumah Kaca</a>
+    </div>
+    <div class="footer-section">
+     <h3>Contact</h3>
+     <p>Email: hello@helloindie.id</p>
+     <p>Phone: +62 21 1234 5678</p>
+     <p>Jakarta, Indonesia</p>
+    </div>
+   </div>
+   <div class="footer-bottom">
+    <p>© 2024 Hello Indie! All rights reserved. Made with ❤️ for Indonesian indie music.</p>
+   </div>
+  </footer>
+  <script>
+        // Configuration object for Element SDK
+        const defaultConfig = {
+            site_title: "Hello Indie!",
+            hero_title: "Discover Indonesian Indie Music",
+            hero_subtitle: "From Harum Manis to Reality Club",
+            featured_band: "Harum Manis",
+            community_title: "Indie Community Indonesia"
+        };
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        let isDark = false;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+        });
+
+        // Language toggle
+        const langToggle = document.getElementById('lang-toggle');
+        let isEnglish = false;
+
+        langToggle.addEventListener('click', () => {
+            isEnglish = !isEnglish;
+            langToggle.textContent = isEnglish ? 'ID' : 'EN';
+            
+            // Simple language switching
+            if (isEnglish) {
+                document.querySelector('.hero-title').textContent = 'Discover Indonesian Indie Music';
+                document.querySelector('.hero-subtitle').textContent = 'From Harum Manis to Reality Club';
+            } else {
+                document.querySelector('.hero-title').textContent = 'Temukan Musik Indie Indonesia';
+                document.querySelector('.hero-subtitle').textContent = 'Dari Harum Manis hingga Reality Club';
+            }
+        });
+
+        // Music player functionality
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const nowPlaying = document.getElementById('now-playing');
+
+        const playlist = [
+            'Harum Manis - "Hentikan Pernikahan Ini"',
+            'Jirapah - "Planetarium"',
+            'Reality Club - "Anything You Want"',
+            'Efek Rumah Kaca - "Desember"'
+        ];
+
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            isPlaying = true;
+            nowPlaying.textContent = `▶ Playing: ${playlist[currentTrack]}`;
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            isPlaying = false;
+            nowPlaying.textContent = `⏸ Paused: ${playlist[currentTrack]}`;
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            nowPlaying.textContent = `▶ Playing: ${playlist[currentTrack]}`;
+            isPlaying = true;
+        });
+
+        // Track list functionality
+        function toggleTrackList(trackListId) {
+            const trackList = document.getElementById(trackListId);
+            const allTrackLists = document.querySelectorAll('.track-list');
+            
+            // Hide all other track lists
+            allTrackLists.forEach(list => {
+                if (list.id !== trackListId) {
+                    list.classList.remove('show');
+                }
+            });
+            
+            // Toggle current track list
+            trackList.classList.toggle('show');
+        }
+
+        function playTrack(artist, song) {
+            event.stopPropagation(); // Prevent album card click
+            nowPlaying.textContent = `▶ Playing: ${artist} - "${song}"`;
+            isPlaying = true;
+            
+            // Add visual feedback
+            const playingMsg = document.createElement('div');
+            playingMsg.textContent = `🎵 Now playing: ${song}`;
+            playingMsg.style.position = 'fixed';
+            playingMsg.style.top = '100px';
+            playingMsg.style.right = '20px';
+            playingMsg.style.background = 'var(--accent-primary)';
+            playingMsg.style.color = 'var(--bg-primary)';
+            playingMsg.style.padding = '1rem';
+            playingMsg.style.borderRadius = '5px';
+            playingMsg.style.fontFamily = 'var(--pixel-font)';
+            playingMsg.style.fontSize = '0.8rem';
+            playingMsg.style.zIndex = '1001';
+            playingMsg.style.animation = 'fadeInUp 0.3s ease';
+            
+            document.body.appendChild(playingMsg);
+            
+            setTimeout(() => {
+                playingMsg.remove();
+            }, 3000);
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const bandCards = document.querySelectorAll('.band-card');
+            
+            bandCards.forEach(card => {
+                const bandName = card.querySelector('.band-name').textContent.toLowerCase();
+                if (bandName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = searchTerm === '' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+
+        chatbotToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const message = chatInput.value.trim();
+                if (message) {
+                    addChatMessage('You', message);
+                    chatInput.value = '';
+                    
+                    // Simple bot responses
+                    setTimeout(() => {
+                        const responses = [
+                            'Check out Harum Manis for dreamy indie pop!',
+                            'Reality Club has some great alternative tracks.',
+                            'Jirapah is perfect for indie rock lovers.',
+                            'Have you listened to Efek Rumah Kaca?',
+                            'Join our community events for live indie music!'
+                        ];
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        addChatMessage('Bot', randomResponse);
+                    }, 1000);
+                }
+            }
+        });
+
+        function addChatMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            messageDiv.style.marginBottom = '0.5rem';
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Contact form
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.textContent = 'Thank you for your message! We\'ll get back to you soon.';
+            successMsg.style.background = 'var(--accent-primary)';
+            successMsg.style.color = 'var(--bg-primary)';
+            successMsg.style.padding = '1rem';
+            successMsg.style.marginTop = '1rem';
+            successMsg.style.fontFamily = 'var(--pixel-font)';
+            successMsg.style.fontSize = '0.8rem';
+            
+            contactForm.appendChild(successMsg);
+            contactForm.reset();
+            
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 20);
+        }
+
+        // Animate counters when visible
+        const statsSection = document.querySelector('.stats-section');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(document.getElementById('bands-counter'), 150);
+                    animateCounter(document.getElementById('songs-counter'), 2500);
+                    animateCounter(document.getElementById('listeners-counter'), 50000);
+                    animateCounter(document.getElementById('events-counter'), 75);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        statsObserver.observe(statsSection);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Element SDK implementation
+        async function onConfigChange(config) {
+            // Update site title
+            const siteTitleElement = document.getElementById('site-title');
+            if (siteTitleElement) {
+                siteTitleElement.textContent = config.site_title || defaultConfig.site_title;
+            }
+
+            // Update hero title
+            const heroTitleElement = document.getElementById('hero-title');
+            if (heroTitleElement) {
+                heroTitleElement.textContent = config.hero_title || defaultConfig.hero_title;
+            }
+
+            // Update hero subtitle
+            const heroSubtitleElement = document.getElementById('hero-subtitle');
+            if (heroSubtitleElement) {
+                heroSubtitleElement.textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+            }
+
+            // Update featured band
+            const featuredBandElement = document.getElementById('featured-band');
+            if (featuredBandElement) {
+                featuredBandElement.textContent = config.featured_band || defaultConfig.featured_band;
+            }
+
+            // Update community title
+            const communityTitleElement = document.getElementById('community-title');
+            if (communityTitleElement) {
+                communityTitleElement.textContent = config.community_title || defaultConfig.community_title;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["site_title", config.site_title || defaultConfig.site_title],
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["featured_band", config.featured_band || defaultConfig.featured_band],
+                ["community_title", config.community_title || defaultConfig.community_title]
+            ]);
+        }
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99ef5406f30dd176',t:'MTc2MzIxNTc4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
